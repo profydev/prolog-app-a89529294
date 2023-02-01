@@ -1,3 +1,5 @@
+const numberOfLinks = 6;
+
 describe("Sidebar Navigation", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000/dashboard");
@@ -6,6 +8,16 @@ describe("Sidebar Navigation", () => {
   context("desktop resolution", () => {
     beforeEach(() => {
       cy.viewport(1025, 900);
+    });
+
+    it("support button works", () => {
+      cy.get("a")
+        .contains("Support")
+        .should(
+          "have.attr",
+          "href",
+          "mailto:support@prolog-app.com?subject=Support Request: "
+        );
     });
 
     it("links are working", () => {
@@ -36,7 +48,11 @@ describe("Sidebar Navigation", () => {
       cy.get("nav").contains("Collapse").click();
 
       // check that links still exist and are functionable
-      cy.get("nav").find("a").should("have.length", 5).eq(1).click();
+      cy.get("nav")
+        .find("a")
+        .should("have.length", numberOfLinks)
+        .eq(1)
+        .click();
       cy.url().should("eq", "http://localhost:3000/dashboard/issues");
 
       // check that text is not rendered
@@ -80,7 +96,7 @@ describe("Sidebar Navigation", () => {
       isInViewport("nav");
 
       // check that all links are rendered
-      cy.get("nav").find("a").should("have.length", 5);
+      cy.get("nav").find("a").should("have.length", numberOfLinks);
 
       // Support button should be rendered but Collapse button not
       cy.get("nav").contains("Support").should("exist");
