@@ -33,9 +33,10 @@ export const Anchor = styled(Link)`
   text-decoration: none;
 `;
 
-export const Icon = styled.img`
+export const Icon = styled.img<{ isCollapsed?: boolean }>`
   width: ${space(6)};
   margin-right: ${space(3)};
+  transform: ${(props) => (props.isCollapsed ? "rotate(180deg)" : "")};
 `;
 
 export function MenuItemLink({
