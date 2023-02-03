@@ -1,15 +1,36 @@
 import styled from "styled-components";
 import { Routes } from "@config/routes";
+import Link from "next/link";
+
+import { color } from "@styles/theme";
 
 const Header = styled.header`
   width: 100%;
   height: 80px;
-  padding: 0 2rem;
+  padding: 0 7rem;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: white;
+`;
+
+const MainLinks = styled.ul`
+  display: flex;
+  gap: 32px;
+`;
+
+const HeaderLink = styled(Link)`
+  color: ${color("gray", 500)};
+  text-decoration: none;
+`;
+
+const LinkButton = styled(Link)`
+  background-color: ${color("primary", 600)};
+  padding: 10px 18px;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
 `;
 
 const ContactButton = styled.button`
@@ -34,7 +55,13 @@ const IssuesPage = () => {
       <Header>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/icons/logo-large.svg" alt="Prolog logo" />
-        <a href={Routes.projects}>Dashboard</a>
+        <MainLinks>
+          <HeaderLink href={Routes.home}>Home</HeaderLink>
+          <HeaderLink href={Routes.products}>Products</HeaderLink>
+          <HeaderLink href={Routes.documentation}>Documentation</HeaderLink>
+          <HeaderLink href={Routes.pricing}>Pricing</HeaderLink>
+        </MainLinks>
+        <LinkButton href={Routes.projects}>Dashboard</LinkButton>
       </Header>
       <ContactButton
         onClick={() =>
