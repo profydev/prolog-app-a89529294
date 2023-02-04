@@ -2,22 +2,30 @@ import styled from "styled-components";
 import { Routes } from "@config/routes";
 import Link from "next/link";
 
-import { color } from "@styles/theme";
+import { color, breakpoint } from "@styles/theme";
 
 const Header = styled.header`
   width: 100%;
   height: 80px;
-  padding: 0 7rem;
+  padding: 1.25rem 1.5rem 1.25rem 1rem;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: white;
+
+  @media (min-width: ${breakpoint("desktop")}) {
+    padding: 0 7rem;
+  }
 `;
 
 const MainLinks = styled.ul`
-  display: flex;
+  display: none;
   gap: 32px;
+
+  @media (min-width: ${breakpoint("desktop")}) {
+    display: flex;
+  }
 `;
 
 const HeaderLink = styled(Link)`
@@ -26,17 +34,22 @@ const HeaderLink = styled(Link)`
 `;
 
 const LinkButton = styled(Link)`
+  display: none;
   background-color: ${color("primary", 600)};
   padding: 10px 18px;
   color: white;
   text-decoration: none;
   border-radius: 8px;
+
+  @media (min-width: ${breakpoint("desktop")}) {
+    display: block;
+  }
 `;
 
 const ContactButton = styled.button`
   position: absolute;
-  bottom: 2.5rem;
-  right: 2.5rem;
+  bottom: 1.5rem;
+  right: 1.5rem;
   padding: 1rem;
   background: #7f56d9;
   border-radius: 50%;
@@ -46,6 +59,17 @@ const ContactButton = styled.button`
 
   &:hover {
     background: #6941c6;
+  }
+
+  @media (min-width: ${breakpoint("desktop")}) {
+    right: 2.5rem;
+    bottom: 2.5rem;
+  }
+`;
+
+const MobileBurger = styled.img`
+  @media (min-width: ${breakpoint("desktop")}) {
+    display: none;
   }
 `;
 
@@ -62,6 +86,7 @@ const IssuesPage = () => {
           <HeaderLink href={Routes.pricing}>Pricing</HeaderLink>
         </MainLinks>
         <LinkButton href={Routes.projects}>Dashboard</LinkButton>
+        <MobileBurger src="/icons/burger.svg" alt="burger nav" />
       </Header>
       <ContactButton
         onClick={() =>
