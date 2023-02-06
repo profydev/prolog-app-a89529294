@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { breakpoint, space } from "@styles/theme";
+import { breakpoint, color, space } from "@styles/theme";
 import { ProjectCard } from "../project-card";
 import { useGetProjects } from "../../api/use-get-projects";
+import Image from "next/image";
 
 const List = styled.ul`
   display: grid;
@@ -18,16 +19,57 @@ const List = styled.ul`
   }
 `;
 
+const ErrorWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  color: ${color("error", 700)};
+  font-size: 0.875rem;
+  gap: 0.75rem;
+  border: 1px solid ${color("error", 300)};
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  background-color: ${color("error", 25)};
+`;
+
+const ErrorButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  white-space: nowrap;
+  background: transparent;
+  border: none;
+  color: ${color("error", 700)};
+`;
+
 export function ProjectList() {
   const { data, isLoading, isError, error } = useGetProjects();
 
-  if (isLoading) {
-    return <div>Loading</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading</div>;
+  // }
 
-  if (isError) {
-    console.error(error);
-    return <div>Error: {error.message}</div>;
+  // eslint-disable-next-line no-constant-condition
+  if (true) {
+    return (
+      <ErrorWrapper className="py-4 pl-4.5 pr-5">
+        <Image
+          src="/icons/alert-circle.svg"
+          alt="alert"
+          width={16}
+          height={16}
+        />
+        There was a problem while loading the project data
+        <ErrorButton>
+          Try again
+          <Image
+            src="/icons/arrow-right-red.svg"
+            alt="right-arrow"
+            width={12}
+            height={12}
+          />
+        </ErrorButton>
+      </ErrorWrapper>
+    );
   }
 
   return (
