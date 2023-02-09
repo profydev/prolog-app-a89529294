@@ -40,3 +40,29 @@ describe("Project List", () => {
     });
   });
 });
+
+describe("Project List Fetch Error", () => {
+  beforeEach(() => {
+    // setup request mock
+    cy.intercept("GET", "https://prolog-api.profy.dev/project", {
+      forceNetworkError: true,
+    }).as("getProjectsFail");
+
+    // open projects page
+    cy.visit("http://localhost:3000/dashboard");
+
+    // wait for request to resolve
+    cy.wait("@getProjectsFail");
+  });
+
+  context("desktop resolution", () => {
+    beforeEach(() => {
+      cy.viewport(1025, 900);
+    });
+
+    it("renders the error try again button", () => {
+      cy.wait(10000);
+      cy.get("main").find("button").contains("Try again");
+    });
+  });
+});
