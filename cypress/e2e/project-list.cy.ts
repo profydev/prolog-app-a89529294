@@ -43,9 +43,8 @@ describe("Project List", () => {
 
 describe("Project List Fetch Error", () => {
   beforeEach(() => {
-    // setup request mock
     cy.intercept("GET", "https://prolog-api.profy.dev/project", {
-      forceNetworkError: true,
+      statusCode: 500,
     }).as("getProjectsFail");
 
     // open projects page
@@ -61,7 +60,7 @@ describe("Project List Fetch Error", () => {
     });
 
     it("renders the error try again button", () => {
-      cy.wait(10000);
+      cy.wait(10000); // needed to wait out the retries
       cy.get("main").find("button").contains("Try again");
     });
   });
